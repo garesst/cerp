@@ -1,0 +1,12 @@
+img-cropper {
+  input[type="file"] {
+    margin-bottom: 1rem;
+  }
+}
+
+.cropContainer {
+  position: relative;
+  width: 100%;
+  height: 600px !important;
+  background: #333;
+}

@@ -1,0 +1,21 @@
+[role="tab"] {
+  .btn {
+    width: 100%;
+    text-align: left;
+    &:hover,
+    &:focus {
+      text-decoration: none;
+    }
+  }
+}
+
+.accordion {
+  & > .card {
+    overflow: hidden;
+  }
+}
+
+.ladda-button[data-style="contract"][data-loading] {
+  border-radius: 50%;
+  width: 61px;
+}

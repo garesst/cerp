@@ -1,0 +1,51 @@
+.code-viewer {
+  pre {
+    position: relative;
+    .btn-copy {
+      display: inline-block;
+      position: absolute;
+      top: 16px;
+      right: 16px;
+    }
+    &.collapsed {
+      height: 80px;
+      overflow: hidden;
+      .btn-copy {
+        display: none;
+      }
+      &::after {
+        display: flex;
+      }
+    }
+    &::after {
+      display: none;
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      top: 0;
+      left: 0;
+      content: "View Code";
+      background: rgba(255, 255, 255, 0.6);
+      align-items: center;
+      justify-content: center;
+      color: #663299;
+      font-weight: bold;
+      cursor: pointer;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    code {
+      padding: 10px 20px;
+    }
+  }
+}
+
+.card-body {
+  .code-viewer {
+    pre {
+      margin: 20px -20px -20px -20px;
+    }
+  }
+}

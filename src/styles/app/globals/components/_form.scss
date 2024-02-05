@@ -1,0 +1,424 @@
+.form-group {
+  position: relative;
+  margin-bottom: 10px;
+  label {
+    font-size: 12px;
+    color: $gray-600;
+    margin-bottom: 4px;
+  }
+}
+
+.form-control {
+  border: initial;
+  outline: initial !important;
+  background: $gray-100;
+  border: 1px solid $gray-400;
+  color: $foreground;
+  &::placeholder {
+    color: $gray-500;
+  }
+  &.rounded,
+  &.form-control-rounded, 
+  // react datetime
+  .rdt.form-control-rounded & {
+    border-radius: 20px;
+  }
+}
+
+select.form-control {
+  -webkit-appearance: none;
+}
+
+.input-group {
+  [type="text"].form-control {
+    height: 34px;
+  }
+}
+
+.input-group-append {
+  .btn {
+    height: 34px;
+    border: 0;
+  }
+}
+
+/* checkbox-custom */
+
+.checkbox {
+  display: block;
+  position: relative;
+  padding-left: 28px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  user-select: none;
+  &:hover input ~ .checkmark {
+    background-color: $gray-500;
+  }
+  input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+    &:checked ~ .checkmark {
+      background-color: $primary;
+    }
+    &:checked ~ .checkmark:after {
+      display: block;
+    }
+    &[disabled] ~ * {
+      color: $gray-300;
+    }
+  }
+  .checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 20px;
+    width: 20px;
+    border-radius: 4px;
+    background-color: $gray-300;
+    &:after {
+      content: "";
+      position: absolute;
+      display: none;
+      left: 0;
+      top: 0;
+      right: 0;
+      width: 4px;
+      bottom: 0;
+      margin: auto;
+      height: 8px;
+      border: solid #{$background};
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
+    }
+  }
+}
+
+@each $name, $value in $theme-colors {
+  .checkbox-#{$name} {
+    input {
+      &:checked ~ .checkmark {
+        background-color: $value !important;
+      }
+    }
+  }
+}
+
+@each $name, $value in $theme-colors {
+  .checkbox-outline-#{$name} {
+    &:hover input ~ .checkmark {
+      background-color: $gray-200;
+    }
+    input {
+      &:checked ~ .checkmark {
+        background-color: $background !important;
+      }
+    }
+    .checkmark {
+      background: $background;
+      border: 1px solid #{$value};
+      &:after {
+        border-color: $value;
+      }
+    }
+  }
+}
+
+// RADIO BUTTON
+.radio {
+  @extend .checkbox;
+  .checkmark {
+    border-radius: 50%;
+    &:after {
+      height: 6px;
+      width: 6px;
+      border-radius: 50%;
+      background: white;
+    }
+  }
+}
+
+@each $name, $value in $theme-colors {
+  .radio-#{$name} {
+    input {
+      &:checked ~ .checkmark {
+        background-color: $value;
+      }
+    }
+  }
+}
+
+@each $name, $value in $theme-colors {
+  .radio-outline-#{$name} {
+    &:hover input ~ .checkmark {
+      background-color: $gray-200;
+    }
+    input {
+      &:checked ~ .checkmark {
+        background-color: $background !important;
+      }
+    }
+    .checkmark {
+      background: $background;
+      border: 1px solid #{$value};
+      &:after {
+        border: 0;
+        background: $value;
+      }
+    }
+  }
+}
+
+// SWITCH
+.switch {
+  position: relative;
+  display: inline-block;
+  padding-left: 50px;
+  height: 16px;
+  span:not(.slider) {
+    position: relative;
+    top: -2px;
+    cursor: pointer;
+  }
+  input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    width: 42px;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 34px;
+    background-color: $gray-300;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+  }
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 24px;
+    width: 24px;
+    left: -1px;
+    bottom: -4px;
+    background-color: $background;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+    border-radius: 50%;
+    box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2),
+      0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+  }
+  input:checked + .slider {
+    background-color: $primary;
+  }
+  input:focus + .slider {
+    box-shadow: 0 0 1px $primary;
+  }
+  input:checked + .slider:before {
+    -webkit-transform: translateX(20px);
+    -ms-transform: translateX(20px);
+    transform: translateX(20px);
+  }
+}
+
+@each $name, $value in $theme-colors {
+  .switch-#{$name} {
+    input:checked + .slider {
+      background-color: $value;
+    }
+    input:focus + .slider {
+      box-shadow: 0 0 1px $value;
+    }
+  }
+}
+
+[dir="rtl"] {
+  .checkbox,
+  .radio {
+    padding-left: 0px;
+    padding-right: 28px;
+
+    .checkmark {
+      left: auto;
+      right: 0;
+    }
+  }
+  .form-check-label {
+    // margin-right: 1rem !important;
+  }
+}
+
+.invalid-feedback,
+.valid-feedback,
+.valid-tooltip,
+.invalid-tooltip {
+  display: none;
+}
+
+.invalid-field {
+  input {
+    border-color: #f44336;
+    padding-right: 1.9695rem;
+    background: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='%23f44336' viewBox='-2 -2 7 7'%3e%3cpath stroke='%23f44336' d='M0 0l3 3m0-3L0 3'/%3e%3ccircle r='.5'/%3e%3ccircle cx='3' r='.5'/%3e%3ccircle cy='3' r='.5'/%3e%3ccircle cx='3' cy='3' r='.5'/%3e%3c/svg%3E");
+    // background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='%23f4433…%3e%3ccircle cy='3' r='.5'/%3e%3ccircle cx='3' cy='3' r='.5'/%3e%3c/svg%3E");
+    background-repeat: no-repeat;
+    background-position: center right calc(0.375em + 0.1875rem);
+    background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
+  }
+  .invalid-feedback {
+    display: block;
+    width: 100%;
+    margin-top: 0.25rem;
+    font-size: 80%;
+    color: #f44336;
+  }
+  .invalid-tooltip {
+    position: absolute;
+    top: 100%;
+    z-index: 5;
+    display: block;
+    max-width: 100%;
+    padding: 0.25rem 0.5rem;
+    margin-top: 0.1rem;
+    font-size: 0.711375rem;
+    line-height: 1.5;
+    color: #fff;
+    background-color: rgba(244, 67, 54, 0.9);
+    border-radius: 0.25rem;
+  }
+}
+
+.valid-field {
+  input {
+    border-color: #4caf50;
+    padding-right: 1.9695rem;
+    background: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%234caf50' d='M2.3 6.73L.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1z'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: center right calc(0.375em + 0.1875rem);
+    background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
+  }
+  .valid-tooltip {
+    position: absolute;
+    top: 100%;
+    z-index: 5;
+    display: block;
+    max-width: 100%;
+    padding: 0.25rem 0.5rem;
+    margin-top: 0.1rem;
+    font-size: 0.711375rem;
+    line-height: 1.5;
+    color: #fff;
+    background-color: rgba(76, 175, 80, 0.9);
+    border-radius: 0.25rem;
+  }
+  .valid-feedback {
+    display: block;
+    width: 100%;
+    margin-top: 0.25rem;
+    font-size: 80%;
+    color: #4caf50;
+  }
+}
+
+.form-wizard {
+  .step-active {
+    position: relative;
+    border-bottom: 2px solid $primary;
+    color: $primary !important;
+  }
+}
+
+// react tag
+.ReactTags__tags {
+  position: relative;
+}
+
+/* Styles for the input */
+.ReactTags__tagInput {
+  width: 200px;
+  border-radius: 2px;
+  display: inline-block;
+}
+
+.ReactTags__tagInput {
+  flex: 1 1 0;
+}
+
+.ReactTags__tagInput input.ReactTags__tagInputField,
+.ReactTags__tagInput input.ReactTags__tagInputField:focus {
+  height: 31px;
+  margin: 0;
+  font-size: 14px;
+  width: 100%;
+  flex: 1 1 0;
+  outline: none;
+  border: none;
+}
+
+/* Styles for selected tags */
+.ReactTags__selected {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  border: 1px solid #eee;
+  border-radius: 5px;
+  padding: 3px;
+}
+
+.ReactTags__selected span.ReactTags__tag {
+  border: 1px solid #ddd;
+  background: $primary;
+  font-size: 14px;
+  color: white;
+  display: inline-block;
+  padding: 5px 10px;
+  margin: 2px 5px;
+  cursor: move;
+  border-radius: 20px;
+  overflow: hidden;
+}
+.ReactTags__selected button.ReactTags__remove {
+  color: white;
+  font-size: 14px;
+  margin-left: 1px;
+  margin-right: -5px;
+  cursor: pointer;
+  background: padding-box;
+  border: none;
+}
+
+/* Styles for suggestions */
+.ReactTags__suggestions {
+  position: absolute;
+}
+.ReactTags__suggestions ul {
+  position: absolute;
+  left: 0;
+  list-style-type: none;
+  box-shadow: 0.05em 0.01em 0.5em rgba(0, 0, 0, 0.2);
+  width: 200px;
+  padding-left: 0;
+  margin-left: 0;
+  background: white;
+}
+.ReactTags__suggestions li {
+  border-bottom: 1px solid #ddd;
+  padding: 5px 10px;
+  margin: 0;
+}
+.ReactTags__suggestions li mark {
+  text-decoration: none;
+  font-weight: 600;
+  background: transparent;
+  font-synthesis: 20px;
+}
+.ReactTags__suggestions ul li.ReactTags__activeSuggestion {
+  background: #f8f9fa;
+  cursor: pointer;
+}

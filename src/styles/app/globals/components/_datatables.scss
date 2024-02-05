@@ -1,0 +1,12 @@
+table {
+  &.dataTable-collapse {
+    border-collapse: collapse !important;
+  }
+}
+
+.react-bootstrap-table-pagination {
+  .dropdown-toggle::after {
+    content: none;
+    display: none !important;
+  }
+}

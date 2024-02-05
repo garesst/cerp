@@ -1,0 +1,57 @@
+.pagination {
+  margin-bottom: 0;
+
+  li {
+    cursor: pointer;
+    color: $primary;
+    a {
+      padding: 8px 12px;
+      height: 100%;
+      @media screen {
+        padding: 6px 9px;
+      }
+    }
+    &:not(.active):hover {
+      a {
+        background: $gray-500;
+      }
+    }
+  }
+  .active {
+    cursor: none;
+    a {
+      background: $primary;
+      color: white;
+    }
+    &:hover {
+      color: white;
+    }
+  }
+  .pages {
+  }
+  .break-me {
+  }
+}
+
+.pagination-lg {
+  li {
+    a {
+      padding: 14px 21px;
+      height: 100%;
+      @media screen {
+        padding: 6px 9px;
+      }
+    }
+  }
+}
+
+.pagination-sm {
+  li {
+    a {
+      padding: 4px 6px;
+      height: 100%;
+    }
+  }
+}
+
+// ratio anchor padding 2:3

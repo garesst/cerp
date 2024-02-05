@@ -1,0 +1,31 @@
+// BOOTSTRAP ALERT
+.alert {
+  // background: $background;
+  border-radius: 10px;
+  .close:focus {
+    outline: 0;
+  }
+}
+
+.swal2-container {
+  .swal2-modal {
+    font-family: $font-family-base;
+  }
+  .swal2-spacer {
+    margin: 1.5rem 0;
+  }
+  .swal2-styled:not(.swal2-cancel) {
+    background: $primary !important;
+    outline: none;
+    &:focus {
+      box-shadow: 0 0 0 0.2rem rgba($primary, 0.5);
+    }
+  }
+}
+
+.notification-container {
+  .title {
+    text-transform: capitalize;
+    color: white !important;
+  }
+}

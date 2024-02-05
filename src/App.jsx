@@ -1,14 +1,17 @@
-import { useState } from 'react'
-import './assets/dist/css/style.min.css'
-import UserPage from "./components/Pages/UserPages/UserPage.jsx";
+import "./styles/app/app.scss";
+
+import Auth from "@AppCerp/auth/Auth.jsx";
+import {RouterProvider} from "react-router-dom";
+import routes from "@AppCerp/routes.jsx";
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
-      <div className="main-wrapper">
-          <UserPage/>
-      </div>
+      <>
+          <Auth >
+              <RouterProvider router={routes} />
+          </Auth>
+      </>
   )
 }
 
