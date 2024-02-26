@@ -1,13 +1,12 @@
-import history from "@history.js";
 import { createSlice } from "@reduxjs/toolkit";
-import jwtAuthService from "@AppCerp/services/jwtAuthService";
+import jwtAuthService from "@AppCerp/services/auth/jwtAuthService";
 import localStorageService from "../../services/localStorageService";
 
 const initialState = {
-  isAuthenticated: true,
+  isAuthenticated: false,
   accessToken: undefined,
   success: false,
-  loading: false,
+  loading: true,
   error: {
     username: null,
     password: null,
@@ -21,8 +20,17 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     setUserData: (state, action) => {
-      const user = action.payload;
-      state = { ...state, ...user };
+      state.accessToken = action.payload.token;
+      state.user = action.payload.user;
+      state.success = action.payload.success;
+      state.isAuthenticated= action.payload.isAuthenticated;
+      state.loading= action.payload.loading;
+      // state = { ...state, ...user ,isAuthenticated:true,accessToken:user.id, success:true,};
+    },
+
+    setUser: (state, action) => {
+      state.user = action.payload.user;
+      // state = { ...state, ...user ,isAuthenticated:true,accessToken:user.id, success:true,};
     },
 
     userLoggedIn: (state, action) => {
@@ -46,46 +54,11 @@ const authSlice = createSlice({
     },
 
     loginWithEmailAndPassword: (state, action) => {
-      const { email, password } = action.payload;
-      let tuser;
-       state.loading = true;
-
-      jwtAuthService
-        .loginWithEmailAndPassword(email, password)
-        .then((user) => {
-          // state.user = user;
-          // state.accessToken = user.token;
-          // state.success = true;
-          // state.loading = false;
-          // state = {
-          //   ...state,
-          //   user: user,
-          //   accessToken: user.token,
-          //   success: true,
-          //   loading: false,
-          // };
-
-          // history.push({ pathname: "/dashboard/v1" });
-          tuser={...user};
-          // localStorageService.setItem("auth_user", {
-          //   accessToken: user.token,
-          //   user: user,
-          // });
-          console.log("success",user);
-        })
-        .catch((error) => {
-          console.log("Error occurd"+error);
-          // state.success = false;
-          // state.loading = false;
-          // state.error = error.data;
-        });
-
-      state.user = tuser;
-      state.accessToken = tuser.token;
+      state.accessToken = action.payload.user.user.token;
+      state.user = action.payload.user.user;
       state.success = true;
-      state.loading = false;
-      history.push({ pathname: "/dashboard/v1" });
-      // console.log(state.loading);
+      state.isAuthenticated= true;
+      state.loading= false;
     },
     logoutJWTUser: (state) => {
       console.log(state.user);
@@ -100,6 +73,7 @@ const authSlice = createSlice({
 
 export const {
   setUserData,
+  setUser,
   userLoggedIn,
   userLoggedOut,
   resetPassword,

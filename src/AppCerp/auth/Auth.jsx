@@ -1,20 +1,19 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { setUserData } from "../redux/auth/authSlice";
-import jwtAuthService from "../services/jwtAuthService";
+import jwtAuthService from "../services/auth/jwtAuthService";
 import localStorageService from "../services/localStorageService";
 
 const Auth = ({ children }) => {
   const dispatch = useDispatch();
-  // const checkJwtAuth = () => {
-  //   jwtAuthService.loginWithToken().then((user) => {
-  //     dispatch(setUserData(user));
-  //   });
-  // };
+  const checkJwtAuth = async () => {
+    jwtAuthService.loginWithToken().then((user) => {
+      dispatch(setUserData(user));
+    }).catch();
+  };
 
   useEffect(() => {
-    dispatch(setUserData(localStorageService.getItem("auth_user")));
-    // checkJwtAuth();
+    checkJwtAuth();
   }, []);
 
   return <>{children}</>;

@@ -107,14 +107,19 @@ export function getTimeDifference(date) {
       moment(date, "DD/MM/YYYY HH:mm:ss")
     ) / 1000;
 
-  if (difference < 60) return `${Math.floor(difference)} seconds`;
-  else if (difference < 3600) return `${Math.floor(difference / 60)} minutes`;
-  else if (difference < 86400) return `${Math.floor(difference / 3660)} hours`;
+  if (difference < 2) return `${Math.floor(difference)} segundo`;
+  else if (difference < 60) return `${Math.floor(difference)} segundos`;
+  else if (difference < 120) return `${Math.floor(difference / 60)} minuto`;
+  else if (difference < 3600) return `${Math.floor(difference / 60)} minutos`;
+  else if (difference < 3660*2) return `${Math.floor(difference / 3660)} hora`;
+  else if (difference < 86400) return `${Math.floor(difference / 3660)} horas`;
+  else if (difference < 86400 * 2)
+    return `${Math.floor(difference / 86400)} dia`;
   else if (difference < 86400 * 30)
-    return `${Math.floor(difference / 86400)} days`;
+    return `${Math.floor(difference / 86400)} dias`;
   else if (difference < 86400 * 30 * 12)
-    return `${Math.floor(difference / 86400 / 30)} months`;
-  else return `${(difference / 86400 / 30 / 12).toFixed(1)} years`;
+    return `${Math.floor(difference / 86400 / 30)} meses`;
+  else return `${(difference / 86400 / 30 / 12).toFixed(1)} años`;
 }
 
 export function generateRandomId() {

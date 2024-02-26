@@ -11,12 +11,16 @@ const getUserRoleAuthStatus = (pathname, user, routes) => {
   if (!user) {
     return false;
   }
+  let authByModule = false;
   const matched = routes.find((r) => r.path === pathname);
+  if (matched && matched.auth && matched.auth.length && user && user.rol && user.rol.permit){
+    authByModule = matched.auth.some(codmodulo => (
+        user.rol.permit.some(objeto => objeto.codmodulo === codmodulo)
+    ));
+  }
+  console.log('authByModule: ',authByModule)
 
-  const authenticated =
-    matched && matched.auth && matched.auth.length
-      ? matched.auth.includes(user.role)
-      : true;
+  const authenticated = authByModule;
 
   return authenticated;
 };
@@ -35,6 +39,7 @@ const AuthGuard = () => {
     flat(routes.routes)
   );
   let authenticated = isAuthenticated && isUserRoleAuthenticated;
+  console.log('pathname:',pathname,' authenticated: ',authenticated,' isAuthenticated: ',isAuthenticated,' isUserRoleAuthenticated: ',isUserRoleAuthenticated)
 
   // IF YOU NEED ROLE BASED AUTHENTICATION,
   // UNCOMMENT ABOVE TWO LINES, getUserRoleAuthStatus METHOD AND user VARIABLE

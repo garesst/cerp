@@ -1,16 +1,18 @@
 import { merge } from "lodash";
 import { Link } from "react-router-dom";
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import { Dropdown } from "react-bootstrap";
 import { getTimeDifference } from "@utils";
-import MegaMenu from "@gull/components/MegaMenu";
+// import MegaMenu from "@gull/components/MegaMenu";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutJWTUser } from "@AppCerp/redux/auth/authSlice";
 import { setLayoutSettings } from "@AppCerp/redux/layout/layoutSlice";
+import {getNotifications} from "@AppCerp/services/notification/NotificationService.js";
 
 const Layout1Header = () => {
   const dispatch = useDispatch();
   const { settings } = useSelector((state) => state.layout);
+  const {user} = useSelector((state) => state.auth);
 
   const [state, setState] = useState({
     shorcutMenuList: [
@@ -46,41 +48,48 @@ const Layout1Header = () => {
       },
     ],
     notificationList: [
-      // {
-      //   icon: "i-Speach-Bubble-6",
-      //   title: "New message",
-      //   description: "James: Hey! are you busy?",
-      //   time: "2019-10-30T02:10:18.931Z",
-      //   color: "primary",
-      //   status: "New",
-      // },
-      // {
-      //   icon: "i-Receipt-3",
-      //   title: "New order received",
-      //   description: "1 Headphone, 3 iPhone",
-      //   time: "2019-03-10T02:10:18.931Z",
-      //   color: "success",
-      //   status: "New",
-      // },
-      // {
-      //   icon: "i-Empty-Box",
-      //   title: "Product out of stock",
-      //   description: "1 Headphone, 3 iPhone",
-      //   time: "2019-05-10T02:10:18.931Z",
-      //   color: "danger",
-      //   status: "3",
-      // },
-      // {
-      //   icon: "i-Data-Power",
-      //   title: "Server up!",
-      //   description: "Server rebooted successfully",
-      //   time: "2019-03-10T02:10:18.931Z",
-      //   color: "success",
-      //   status: "3",
-      // },
+      {
+        icon: "i-Speach-Bubble-6",
+        title: "New message",
+        description: "James: Hey! are you busy?",
+        time: "2019-10-30T02:10:18.931Z",
+        color: "primary",
+        status: "New",
+      },
+      {
+        icon: "i-Receipt-3",
+        title: "New order received",
+        description: "1 Headphone, 3 iPhone",
+        time: "2019-03-10T02:10:18.931Z",
+        color: "success",
+        status: "New",
+      },
+      {
+        icon: "i-Empty-Box",
+        title: "Product out of stock",
+        description: "1 Headphone, 3 iPhone",
+        time: "2019-05-10T02:10:18.931Z",
+        color: "danger",
+        status: "3",
+      },
+      {
+        icon: "i-Data-Power",
+        title: "Server up!",
+        description: "Server rebooted successfully",
+        time: "2019-03-10T02:10:18.931Z",
+        color: "success",
+        status: "3",
+      },
     ],
     showSearchBox: false,
   });
+
+  useEffect(()=>{
+    getNotifications(user.id).then(notificaciones => {
+      // console.log("notificaciones:",notificaciones)
+      setState({...state,notificationList: notificaciones});
+    })
+  },[]);
 
   const handleMenuClick = () => {
     dispatch(
@@ -147,23 +156,27 @@ const Layout1Header = () => {
         {/*  </div>*/}
         {/*</Dropdown>*/}
 
-        <div className="search-bar">
-          <input
-            type="text"
-            placeholder="Search"
-            onFocus={handleSearchBoxOpen}
-          />
-          <i className="search-icon text-muted i-Magnifi-Glass1"></i>
-        </div>
+        {
+          state.showSearchBox && (
+                <div className="search-bar">
+                  <input
+                      type="text"
+                      placeholder="Search"
+                      onFocus={handleSearchBoxOpen}
+                  />
+                  <i className="search-icon text-muted i-Magnifi-Glass1"></i>
+                </div>
+            )
+        }
       </div>
 
-      <div style={{ margin: "auto" }}></div>
+      <div style={{margin: "auto"}}></div>
 
       <div className="header-part-right">
         <i
-          onClick={toggleFullScreen}
-          className="i-Full-Screen header-icon d-none d-sm-inline-block"
-          data-fullscreen
+            onClick={toggleFullScreen}
+            className="i-Full-Screen header-icon d-none d-sm-inline-block"
+            data-fullscreen
         ></i>
 
         <Dropdown>
@@ -187,7 +200,7 @@ const Layout1Header = () => {
             id="dropdownNotification"
             className="badge-top-container toggle-hidden"
           >
-            <span className="badge bg-primary cursor-pointer"></span>
+            <span className="badge bg-primary cursor-pointer">{notificationList.length}</span>
             <i className="i-Bell text-muted header-icon"></i>
           </Dropdown.Toggle>
           <Dropdown.Menu className="notification-dropdown">
@@ -206,7 +219,7 @@ const Layout1Header = () => {
                     </span>
                     <span className="flex-grow-1"></span>
                     <span className="text-small text-muted ms-auto">
-                      {getTimeDifference(new Date(note.time))} ago
+                      Hace {getTimeDifference(new Date(note.time))}
                     </span>
                   </p>
                   <p className="text-small text-muted m-0">
@@ -234,7 +247,7 @@ const Layout1Header = () => {
               <div className="dropdown-header">
                 <i className="i-Lock-User me-1"></i> Timothy Carlson
               </div>
-              <Link to="/" className="dropdown-item cursor-pointer">
+              <Link to="/profile" className="dropdown-item cursor-pointer">
                 Account settings
               </Link>
               <Link to="/" className="dropdown-item cursor-pointer">
@@ -243,7 +256,7 @@ const Layout1Header = () => {
               <Link
                 to="/"
                 className="dropdown-item cursor-pointer"
-                // onClick={() => dispatch(logoutJWTUser())}
+                onClick={() => dispatch(logoutJWTUser())}
               >
                 Sign out
               </Link>

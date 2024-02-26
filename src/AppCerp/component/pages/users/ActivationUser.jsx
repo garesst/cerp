@@ -1,5 +1,5 @@
 import {useEffect, useRef, useState} from "react";
-import {activateUserTenant} from "@AppCerp/services/AuthService.js";
+import {activateUserTenant} from "@AppCerp/services/auth/AuthService.js";
 
 const ActivationUser = ({parametro}) => {
 

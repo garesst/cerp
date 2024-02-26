@@ -1,10 +1,10 @@
 import { lazy, Suspense } from "react";
-import ActivateUser from "@AppCerp/views/sessions/ActivateUser.jsx";
 
 const Signup = lazy(() => import("./Signup"));
 const Signin = lazy(() => import("./Signin"));
 const ForgotPassword = lazy(() => import("./ForgotPassword"));
 const Error404 = lazy(() => import("./Error"));
+const ActivateUser = lazy(() => import("./ActivateUser.jsx"))
 
 const sessionsRoutes = [
   {

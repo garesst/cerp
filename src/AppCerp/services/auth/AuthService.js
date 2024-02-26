@@ -1,18 +1,6 @@
-// import {Store} from '../redux/Store';
+import {store} from '../../store.js';
 import axios from "axios";
 
-export const signin = (data) => {
-    return new Promise((resolve, reject) => {
-        setTimeout(() => {
-            resolve({
-                userId: "1",
-                Name: "Rosy",
-                email: "ui-lib@gmail.com",
-                age: 25
-            });
-        }, 1000);
-    });
-}
 
 export const signup = async (data) => {
     const headers = {
@@ -61,21 +49,34 @@ export const activateUserTenant = async (idUser) => {
         });
 }
 
-
-export const signout = () => {
-    console.log("Log out successfule");
-    return new Promise((resolve, reject) => {
-        setTimeout(() => {
-            resolve(true);
-        }, 1000);
-    })
+export const searchTenantByUser = async (email) => {
+    const headers = {
+        'Access-Control-Allow-Origin': '*',
+        'Content-Type': 'application/json',
+    }
+    const apiUrl = import.meta.env.VITE_URL_TENANTBYEMAIL+email;
+    return await axios.get(apiUrl, {headers})
+        .then(response => {
+            // console.log(response)
+            return response.data;
+        })
+        .catch(error => {
+            // Manejar errores
+            // console.error("Error en la solicitud:", error);
+            return 0;
+        });
 }
 
-let authenticated = true;
+
+let authenticated = false;
+let tokenUser = '';
 
 export const getAuthStatus = () => authenticated;
+export const getAuthToken = () => tokenUser;
 
-// Store.subscribe(state => {
-//     if (state)
-//         authenticated = state.auth.isUserLoggedIn
-// })
+store.subscribe(state => {
+    if (state){
+        authenticated = state.auth.isAuthenticated;
+        tokenUser = state.accessToken;
+    }
+})

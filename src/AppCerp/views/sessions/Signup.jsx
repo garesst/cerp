@@ -4,7 +4,7 @@ import {Formik} from "formik";
 import {useState} from "react";
 import SubGiroSelect from "@AppCerp/component/select/SubGiroSelect.jsx";
 import TipoNegocioSelect from "@AppCerp/component/select/TipoNegocioSelect.jsx";
-import {signup} from "@AppCerp/services/AuthService.js";
+import {signup} from "@AppCerp/services/auth/AuthService.js";
 import SweetAlert from "sweetalert2-react";
 
 const Signup = () => {
@@ -214,7 +214,7 @@ const SignupSchema = yup.object().shape({
     email: yup.string().email("Formato de email invalido").required("El email es requerido"),
     password: yup
         .string()
-        .min(8, "La contraseña debe de tener 8 caracteres de longitus")
+        .min(8, "La contraseña debe de tener 8 caracteres de longitud")
         .required("La contraseña es requerida")
 });
 

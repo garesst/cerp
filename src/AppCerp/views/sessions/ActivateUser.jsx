@@ -1,6 +1,6 @@
 
 import {Link} from "react-router-dom";
-import ActivationUser from "@AppCerp/component/pages/ActivationUser.jsx";
+import ActivationUser from "@AppCerp/component/pages/users/ActivationUser.jsx";
 
 
 const ActivateUser = () => {
